@@ -9,19 +9,36 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var speed = 50.0
+    @State private var speed: Double = 0.0
     @State private var isEditing = false
     
+    
+    var faringate: Int {
+        let calculate = Int(speed) * 9 / 5 + 32
+        return calculate
+    }
     
     var body: some View {
         NavigationView {
             
             Form {
-                Text("hello")
-                Slider(
+                    Section {
+                        Text("""
+                             Celcium: \(Int(speed))
+                             
+                             Fahrenheit: \(faringate)
+                             """)
+                        .font(.headline).bold()
+                        
+                        .foregroundColor(isEditing && speed > 50 ? .red : .black)
+                    }header: {
+                        Text("Temperature celsium and fahrenheit")
+                    }
+                Section {
+                    Slider(
                         value: $speed,
                         in: 0...100,
-                        step: 5
+                        step: 1
                     ) {
                         Text("Speed")
                     } minimumValueLabel: {
@@ -31,9 +48,12 @@ struct ContentView: View {
                     } onEditingChanged: { editing in
                         isEditing = editing
                     }
-                    Text("\(speed)")
-                        .foregroundColor(isEditing ? .red : .blue)
-            }
+                }header: {
+                    Text("Select the celsius temperature")
+                }
+                
+                    }
+                    
             .navigationTitle("Temp Convertor")
         }
     }
