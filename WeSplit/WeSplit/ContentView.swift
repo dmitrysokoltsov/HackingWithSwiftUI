@@ -49,7 +49,8 @@ struct ContentView: View {
                     Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "USD"))
                 } header: {
                     Text("Amount per person")
-                }
+                    //conditional modifier 24 day
+                }.foregroundColor(tipPercentage == 0 ? .red : .black)
             }
             .navigationTitle("WeSplit")
             //Dismiss the keyboard when you start scrolling
