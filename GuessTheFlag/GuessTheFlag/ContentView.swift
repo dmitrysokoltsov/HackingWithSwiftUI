@@ -1,47 +1,63 @@
-//
-//  ContentView.swift
-//  GuessTheFlag
-//
-//  Created by Dmitry Sokoltsov on 30.04.2022.
-//
-
 import SwiftUI
+import Foundation
 
 struct ContentView: View {
-    var countries = ["Estonia","France","Germany","Ireland","Italy","Monaco","Nigeria","Poland","Spain","US","UK"]
-    var correctAnswer = Int.random(in: 0...2)
+    @State private var checkAmount: Double?
+    @State private var numberOfPeople = 2
+    @State private var tipPercentage = 0
+    
+    
+    let tipPersentages = [0,10,15,20,25]
+    
+    
+    var totalPerPerson: Double {
+        let peopleCount = Double(numberOfPeople + 2)
+        let tipSelection = Double(tipPercentage)
+        
+        let tipValue = (checkAmount ?? 0.0) / 100 * tipSelection
+        let grandTotal = (checkAmount ?? 0.0) + tipValue
+        let amountPercentage = grandTotal / peopleCount
+        
+        
+        return amountPercentage
+    }
     
     var body: some View {
-        ZStack {
-            Image("background")
-                .blur(radius: 20)
-                .ignoresSafeArea()
-            VStack(spacing: 30) {
-                VStack {
-                    Text("Select the correct flag")
-                    
-                    Text(countries[correctAnswer])
-                        .foregroundColor(Color.primary.opacity(0.8))
-                        .padding()
-                        .frame(height: 50)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(14)
-                    
-                }
-                ForEach(0..<3) { number in
-                    Button(){
-                        //taped button
-                    }label: {
-                        Image(countries[number])
-                            .renderingMode(.original)
-                            .cornerRadius(14)
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Amount", value: $checkAmount, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                        .keyboardType(.decimalPad)
+                    Picker("Select number of people", selection: $numberOfPeople) {
+                        ForEach(2..<51) {
+                            Text("\($0) people")
+                        }
                     }
                 }
+                Section{
+                    Picker("Tip percentage", selection: $tipPercentage){
+                        ForEach(tipPersentages, id: \.self) {
+                            Text($0, format: .percent)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                } header: {
+                    Text("How much tip do you want to leave?")
+                }
+                
+                Section {
+                    Text(totalPerPerson, format: .currency(code: Locale.current.currencyCode ?? "USD"))
+                } header: {
+                    Text("Amount per person")
+                    //conditional modifier 24 day
+                }.foregroundColor(tipPercentage == 0 ? .red : .black)
             }
+            .navigationTitle("WeSplit")
+            //Dismiss the keyboard when you start scrolling
+            .gesture(DragGesture().onChanged{_ in UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)})
         }
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
