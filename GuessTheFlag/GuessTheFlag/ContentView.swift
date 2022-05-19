@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var score = 0
+    @State private var animationAount = 0.0
+    @State private var selectFlag = false
     
     // Flag modifier 24 day
     struct FlagImage: View {
@@ -47,10 +49,15 @@ struct ContentView: View {
                 
                 ForEach(0..<3) { number in
                     Button(){
+                        withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)) {
+                            animationAount += 360
+                        }
                         flagTapped(number)
                     }label: {
                         FlagImage(image: countries[number])
+                            .rotation3DEffect(.degrees(animationAount), axis: (x: 0, y: 1, z: 0))
                     }
+                    
                 }
                 HStack() {
                     Text("Score: \(score)")
