@@ -8,9 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var numberOne = 1
+    @State private var numberTwo = 1
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                VStack{
+                    Text("\(numberOne) x \(numberTwo) = ?")
+                        .font(.largeTitle)
+                        .padding()
+                }
+                HStack {
+                    ForEach(0..<4) { number in
+                        Button() {
+                            correctAnswer()
+                        }label: {
+                            Text("Button")
+                                .background(.blue)
+                                .frame(width: 50, height: 50)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Animal Multi")
+        }
+        
+    }
+    
+    func correctAnswer () {
+        
     }
 }
 
