@@ -23,7 +23,7 @@ struct ContentView: View {
                 HStack {
                     ForEach(0..<4) { number in
                         Button() {
-                            correctAnswer()
+                            correctAnswer(number)
                         }label: {
                             Text("Button")
                                 .background(.blue)
@@ -37,7 +37,7 @@ struct ContentView: View {
         
     }
     
-    func correctAnswer () {
+    func correctAnswer (_ number: Int) {
         
     }
 }
