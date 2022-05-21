@@ -11,14 +11,18 @@ struct ContentView: View {
     
     @State private var numberOne = 1
     @State private var numberTwo = 1
+    @State private var answerNubmer = []
+    @State private var animalsImage: [String] = ["duck", "buffalo", "chick", "moose", "panda", "whale"]
     
     var body: some View {
         NavigationView {
             VStack {
+                AnimalImages(image: animalsImage.randomElement() ?? "duck")
+                
                 VStack{
                     Text("\(numberOne) x \(numberTwo) = ?")
                         .font(.largeTitle)
-                        .padding()
+                        .padding(100)
                 }
                 HStack {
                     ForEach(0..<4) { number in
