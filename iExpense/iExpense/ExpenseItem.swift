@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ExepenseItem {
+struct ExepenseItem: Identifiable {
+    let id = UUID()
     let name: String
     let type: String
     let amount: Double
