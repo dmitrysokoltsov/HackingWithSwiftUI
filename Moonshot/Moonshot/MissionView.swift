@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct RectangleLine: View {
+    var body: some View {
+        Rectangle()
+            .frame(height: 2)
+            .foregroundColor(.lightBackground)
+            .padding(.vertical)
+    }
+}
+
 struct CrewMember {
     let role: String
     let astronaut: Astronaut
@@ -28,21 +37,19 @@ struct MissionView: View {
                         .padding()
                     
                     VStack(alignment: .leading) {
-                        Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.lightBackground)
-                            .padding(.vertical)
+                        RectangleLine()
                         Text("Mission Highlights")
                             .font(.title.bold())
                             .padding(.bottom, 6)
                         
+                        Text(missions.formattedLaunchDate)
+                            .font(.headline)
+                        
                         Text(missions.description)
                         
-                        Rectangle()
-                            .frame(height: 2)
-                            .foregroundColor(.lightBackground)
-                            .padding(.vertical)
+                        RectangleLine()
                         
+
                         Text("Crew")
                             .font(.title.bold())
                             .padding(.bottom, 5)
